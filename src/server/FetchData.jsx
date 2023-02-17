@@ -1,12 +1,12 @@
-const FetchData = async (endpoint, settings, handleFetch, execption) => {
-  const response = await fetch(`http://localhost:5000${endpoint}`, settings);
+const FetchData = async (endpoint, settings) => {
+  let response = await fetch(`https://fakestoreapi.com${endpoint}`);
 
-  if (response.ok) {
-    let data = await response.json();
-    handleFetch && handleFetch(data);
-  } else {
-    execption && execption();
+  if (response.status === 200) {
+    let json = await response.json();
+    return json;
   }
+
+  throw new Error(response.status);
 };
 
 export default FetchData;

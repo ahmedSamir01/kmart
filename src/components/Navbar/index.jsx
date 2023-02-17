@@ -1,11 +1,6 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 function Navbar() {
-  const location = useLocation().pathname;
-  if (location.match(/dashboard/)) {
-    return <Outlet />;
-  }
-
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -34,11 +29,6 @@ function Navbar() {
               <li className="nav-item">
                 <Link className="nav-link" to="/cart">
                   Cart
-                </Link>
-              </li>
-              <li className="nav-item ms-lg-auto">
-                <Link className="nav-link" to="/dashboard">
-                  Admin
                 </Link>
               </li>
             </ul>

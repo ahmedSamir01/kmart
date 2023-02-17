@@ -7,7 +7,11 @@ function Products() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    FetchData("/cart", { method: "GET" }, (e) => setItems(e));
+    FetchData("/products")
+      .then((e) => {
+        setItems(e);
+      })
+      .catch(alert);
   }, []);
 
   return (
@@ -17,7 +21,7 @@ function Products() {
           {items?.length ? (
             items.map((item) => (
               <div className="cart-item col-md-4 col px-4 mb-5" key={item.id}>
-                <Card {...item} readOnly={true} isAdmin={false} />
+                <Card {...item} />
               </div>
             ))
           ) : (

@@ -1,68 +1,20 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import FetchData from "server/FetchData";
 
 function Order({ data }) {
-  const [count, setCount] = useState(0);
   const [isloading, setIsloading] = useState(false);
+  const count = 0;
 
   useEffect(() => {
-    data.count && setCount(data.count);
-  }, [data.count]);
-
-  function closeSpinner(counterSet) {
-    setTimeout(() => {
-      setIsloading(false);
-      counterSet();
-    }, 1000);
-  }
+    // data.count && setCount(data.count);
+  }, []);
 
   const handleAdd = () => {
-    setIsloading(true);
-
-    const options = {
-      method: count ? "PUT" : "POST",
-      body: JSON.stringify({
-        ...data,
-        count: count ? count + 1 : 1,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    FetchData(
-      count ? `/shopping-items/${data.id}` : `/shopping-items`,
-      options,
-      (e) => {
-        closeSpinner(() => setCount((count) => count + 1));
-      },
-      () => setIsloading(false)
-    );
+    // code here
   };
 
   const handleRemove = () => {
-    if (count > 1) {
-      setIsloading(true);
-      const options = {
-        method: "PUT",
-        body: JSON.stringify({
-          ...data,
-          count: count - 1,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      FetchData(`/shopping-items/${data.id}`, options, (e) => {
-        closeSpinner(() => setCount((count) => count - 1));
-      });
-    } else if (count === 1) {
-      setIsloading(true);
-      FetchData(`/shopping-items/${data.id}`, { method: "DELETE" }, (e) => {
-        closeSpinner(() => setCount((count) => count - 1));
-      });
-    }
+    // code here
   };
 
   return (
