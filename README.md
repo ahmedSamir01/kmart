@@ -3,11 +3,13 @@ Project Title: kmart
 Details: This is an e-commerce wep application. I apply a combination of different techniques across a range of branches!
 
 Main used technologies:
+
     React
     React Router
     Bootstrap
 
 Sub-technologies used:
+
     JSON server
     Recoil
     Context
