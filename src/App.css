@@ -1,0 +1,123 @@
+@font-face {
+  font-family: kochire;
+  src: url("./assets/fonts/KochireRegular.otf") format("truetype");
+}
+
+#root {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+html {
+  font-size: 100%;
+}
+body {
+  font-size: 1rem;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 1920px) {
+  .container-fluid {
+    width: 1899px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.navbar-brand {
+  font-weight: 300;
+  font-size: 1.5rem;
+  padding-top: 0;
+}
+.navbar-brand::first-letter {
+  font-weight: 800;
+  margin-inline-end: 0.1rem;
+}
+
+.nav-link {
+  color: #fff;
+}
+
+.dashboard {
+  height: 100vh;
+  min-height: 100vh;
+}
+aside {
+  height: 100vh;
+}
+.dash-control {
+  overflow: auto;
+  height: 100vh;
+}
+
+aside a {
+  color: #fff !important;
+  text-decoration: unset;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+aside ul {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+label {
+  text-transform: capitalized;
+}
+
+.card {
+  min-height: 27rem;
+}
+
+.card img {
+  height: 13rem;
+}
+
+.max-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card .card-title {
+  height: auto;
+  font-size: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-body {
+  display: flex;
+}
+
+.swal2-popup .swal2-title {
+  font-size: 1.3rem;
+  text-transform: capitalize;
+}
+.swal2-popup button {
+  font-size: 1rem;
+}
+
+.cart-item {
+  color: #111;
+  text-decoration: none;
+}
+
+.cart-details img {
+  width: 300px;
+  height: 400px;
+}
