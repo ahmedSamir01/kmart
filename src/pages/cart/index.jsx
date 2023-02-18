@@ -17,7 +17,7 @@ function Cart() {
         <Button className="mb-3 me-3" onClick={handleClear} variant="primary">
           Clear
         </Button>
-        <span className="total">Total: {totalPrice.toFixed(2)}$</span>
+        <span className="total">Total: {totalPrice ? totalPrice.toFixed(2) + "$" : 0}</span>
         <div className="row w-100 g-0">
           <Table striped bordered hover responsive>
             <thead>
