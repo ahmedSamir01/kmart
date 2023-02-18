@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Order from "components/order";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import FetchData from "server/FetchData";
+import Order from "components/order";
 
 function Product() {
   const { id } = useParams();
