@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Table, Image, Button } from "react-bootstrap";
 import { stateContext } from "context/CartContext";
 
