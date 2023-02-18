@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import FetchData from "server/FetchData";
+import FetchData from "server/fetchData";
 import Card from "components/card";
 
 function Products() {

@@ -1,10 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
-import { useContext } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { stateContext } from "context/CartContext";
+import cartState from "atoms/cartSlice";
+import { useRecoilState } from "recoil";
 
 function NavbarComponent() {
-  const { cartList } = useContext(stateContext);
+  const [cartList] = useRecoilState(cartState);
 
   return (
     <>
@@ -28,7 +28,7 @@ function NavbarComponent() {
         </Container>
       </Navbar>
       <div className="content-container">
-         <Outlet/>
+        <Outlet />
       </div>
     </>
   );

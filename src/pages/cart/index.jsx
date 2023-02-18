@@ -1,9 +1,9 @@
-import { useContext } from "react";
 import { Table, Image, Button } from "react-bootstrap";
-import { stateContext } from "context/CartContext";
+import { useRecoilState } from "recoil";
+import cartState from "atoms/cartSlice";
 
 function Cart() {
-  const { cartList, handleClear, handleRemove } = useContext(stateContext);
+  const [cartList, setCartList] = useRecoilState(cartState);
 
   const totalPrice = cartList.reduce(
     (accumulator, currentValue) =>
@@ -11,13 +11,22 @@ function Cart() {
     0
   );
 
+  function handleRemove(id) {
+    setCartList(cartList.filter((e) => e.id !== id));
+  }
+  function handleClear() {
+    setCartList([]);
+  }
+
   return (
     <section className="mt-5">
       <div className="container-fluid">
         <Button className="mb-3 me-3" onClick={handleClear} variant="primary">
           Clear
         </Button>
-        <span className="total">Total: {totalPrice.toFixed(2)}$</span>
+        <span className="total">
+          Total: {totalPrice ? totalPrice.toFixed(2) + "$" : 0}
+        </span>
         <div className="row w-100 g-0">
           <Table striped bordered hover responsive>
             <thead>
