@@ -2,7 +2,7 @@
   "cart": [
     {
       "id": 6,
-      "title": "Solid Gold Petite Micropavo",
+      "title": "Solid Gold Petite Micropavo1",
       "description": "Satisfaction Guaranteed. Return or exchange any order within 30 days.Designed and sold by Hafeez Center in the United States. Satisfaction Guaranteed. Return or exchange any order within 30 days.",
       "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg"
     },
@@ -56,14 +56,14 @@
       "title": "Solid Gold Petite Micropave 2",
       "id": 6,
       "description": "Satisfaction Guaranteed. Return or exchange any order within 30 days.Designed and sold by Hafeez Center in the United States. Satisfaction Guaranteed. Return or exchange any order within 30 days.",
-      "count": 6
+      "count": 5
     },
     {
       "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-skincare-products-1656081764.jpg?crop=1.00xw:0.503xh;0,0.279xh&resize=1200:*",
       "title": "new item",
       "id": 18,
       "description": "new desc",
-      "count": 2
+      "count": 3
     },
     {
       "image": "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg",

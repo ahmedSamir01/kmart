@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FetchData from "server/FetchData";
 
 function Order({ data }) {

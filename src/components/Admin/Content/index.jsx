@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Card from "components/Card";
+import Card from "components/card";
 import FetchData from "server/FetchData";
-import SweetAlert from "components/SweetAlert";
+import SweetAlert from "components/sweetAlert";
 
 export default function Content() {
   const [items, setItems] = useState([]);

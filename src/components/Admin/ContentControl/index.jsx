@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import SweetAlert from "components/SweetAlert";
+import SweetAlert from "components/sweetAlert";
 import FetchData from "server/FetchData";
 
 export default function ContentControl({ editable }) {

@@ -1,13 +1,13 @@
 import { Routes, Route, Outlet } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import Products from "./pages/Products";
-import Product from "./pages/Product";
-import Dashboard from "./pages/Dashboard";
-import Cart from "./pages/Cart";
-import Content from "./components/Admin/Content";
-import ContentControl from "./components/Admin/ContentControl";
+import Navbar from "./components/navbar";
+import Home from "./pages/home";
+import Products from "./pages/products";
+import Product from "./pages/product";
+import Dashboard from "./pages/dashboard";
+import Cart from "./pages/cart";
+import Content from "./components/admin/content";
+import ContentControl from "./components/admin/contentControl";
 
 function App() {
   return (

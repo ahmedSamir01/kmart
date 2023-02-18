@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import Order from "components/Order";
+import Order from "components/order";
 
 function Card(props) {
   const Navigate = useNavigate();
