@@ -1,7 +1,6 @@
-import Card from "components/Card";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import FetchData from "server/FetchData";
+import Card from "components/card";
 
 function Products() {
   const [items, setItems] = useState([]);
