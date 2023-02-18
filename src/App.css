@@ -31,6 +31,10 @@ h5 {
   }
 }
 
+.content-container {
+  margin-top: 90px
+}
+
 .navbar-brand {
   font-weight: 300;
   font-size: 1.5rem;
@@ -75,7 +79,7 @@ label {
 }
 
 .card {
-  min-height: 27rem;
+  min-height: 28rem;
 }
 
 .card img {
@@ -101,7 +105,7 @@ label {
 }
 
 .card-body {
-  display: flex;
+  justify-content: space-between;
 }
 
 .swal2-popup .swal2-title {

@@ -1,43 +1,37 @@
 import { Link, Outlet } from "react-router-dom";
+import { useContext } from "react";
+import { Navbar, Container, Nav } from "react-bootstrap";
+import { stateContext } from "context/CartContext";
 
-function Navbar() {
+function NavbarComponent() {
+  const { cartList } = useContext(stateContext);
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container-fluid">
+      <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
+        <Container fluid>
           <Link className="navbar-brand me-4" to="/">
             KMART
           </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav w-100 mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link" to="/products">
-                  Shop!
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/cart">
-                  Cart
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <Outlet />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Link className="nav-link" to="/products">
+                Shop!
+              </Link>
+              <Link className="nav-link" to="/cart">
+                Cart{" "}
+                <div className="badge bg-success ms-1">{cartList?.length}</div>
+              </Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <div className="content-container">
+         <Outlet/>
+      </div>
     </>
   );
 }
 
-export default Navbar;
+export default NavbarComponent;

@@ -1,16 +1,23 @@
-import { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { useContext, useEffect } from "react";
+import { Table, Image, Button } from "react-bootstrap";
+import { stateContext } from "context/CartContext";
 
 function Cart() {
-  const [items, setItems] = useState([]);
+  const { cartList, handleClear, handleRemove } = useContext(stateContext);
 
-  useEffect(() => {
-    // FetchData("/products", { method: "GET" }, (e) => setItems(e));
-  }, []);
+  const totalPrice = cartList.reduce(
+    (accumulator, currentValue) =>
+      (accumulator += currentValue.price * currentValue.quantity),
+    0
+  );
 
   return (
     <section className="mt-5">
       <div className="container-fluid">
+        <Button className="mb-3 me-3" onClick={handleClear} variant="primary">
+          Clear
+        </Button>
+        <span className="total">Total: {totalPrice}$</span>
         <div className="row w-100 g-0">
           <Table striped bordered hover responsive>
             <thead>
@@ -24,15 +31,31 @@ function Cart() {
               </tr>
             </thead>
             <tbody>
-              {items?.length ? (
-                items.map((item) => (
+              {cartList?.length ? (
+                cartList.map((item) => (
                   <tr key={item.id}>
                     <td>{item.id}</td>
                     <td>{item.title}</td>
-                    <td>{item.image}</td>
-                    <td>{item.price}</td>
+                    <td className="text-center">
+                      <Image
+                        style={{ width: "50px", height: "50px" }}
+                        fluid
+                        rounded
+                        thumbnail
+                        src={item.image}
+                      />
+                    </td>
+                    <td>{item.price}$</td>
                     <td>{item.quantity}</td>
-                    <td>actions</td>
+                    <td>
+                      <Button
+                        onClick={() => handleRemove(item.id)}
+                        size="sm"
+                        variant="outline-danger"
+                      >
+                        delete
+                      </Button>
+                    </td>
                   </tr>
                 ))
               ) : (

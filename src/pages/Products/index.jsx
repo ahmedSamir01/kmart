@@ -1,4 +1,4 @@
-import Card from "components/Card";
+import Card from "components/card";
 import { useState } from "react";
 import { useEffect } from "react";
 import FetchData from "server/FetchData";
