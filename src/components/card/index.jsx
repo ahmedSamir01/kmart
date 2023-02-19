@@ -1,25 +1,9 @@
-import { useRecoilState } from "recoil";
-import cartState from "atoms/cartSlice";
+import { useDispatch } from "react-redux";
+import { addProduct } from "store/actions/cartActions";
 
 function Card(props) {
   const { image, title, description } = props;
-  const [cartList, setCartList] = useRecoilState(cartState);
-
-  function handleAdd(item) {
-    const foundedProduct = cartList.find((e) => e.id === item.id);
-    if (foundedProduct) {
-      const newList = cartList.map((e) => {
-        if (e.id === item.id) {
-          return { ...foundedProduct, quantity: foundedProduct.quantity + 1 };
-        } else {
-          return e;
-        }
-      });
-      setCartList(newList);
-    } else {
-      setCartList((list) => list.concat({ ...item, quantity: 1 }));
-    }
-  }
+  const dispatch = useDispatch();
 
   return (
     <div className="card p-3 pb-0">
@@ -30,7 +14,7 @@ function Card(props) {
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => handleAdd(props)}
+          onClick={() => dispatch(addProduct(props))}
         >
           Add to cart
         </button>

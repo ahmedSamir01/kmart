@@ -1,27 +1,24 @@
 import { Table, Image, Button } from "react-bootstrap";
-import { useRecoilState } from "recoil";
-import cartState from "atoms/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { removeProduct, removeProducts } from "store/actions/cartActions";
 
 function Cart() {
-  const [cartList, setCartList] = useRecoilState(cartState);
-
+  const dispatch = useDispatch();
+  const cartList = useSelector((store) => store);
   const totalPrice = cartList.reduce(
     (accumulator, currentValue) =>
       (accumulator += currentValue.price * currentValue.quantity),
     0
   );
 
-  function handleRemove(id) {
-    setCartList(cartList.filter((e) => e.id !== id));
-  }
-  function handleClear() {
-    setCartList([]);
-  }
-
   return (
     <section className="mt-5">
       <div className="container-fluid">
-        <Button className="mb-3 me-3" onClick={handleClear} variant="primary">
+        <Button
+          className="mb-3 me-3"
+          onClick={() => dispatch(removeProducts())}
+          variant="primary"
+        >
           Clear
         </Button>
         <span className="total">
@@ -58,7 +55,7 @@ function Cart() {
                     <td>{item.quantity}</td>
                     <td>
                       <Button
-                        onClick={() => handleRemove(item.id)}
+                        onClick={() => dispatch(removeProduct(item.id))}
                         size="sm"
                         variant="outline-danger"
                       >

@@ -1,10 +1,9 @@
 import { Link, Outlet } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import cartState from "atoms/cartSlice";
-import { useRecoilState } from "recoil";
+import { useSelector } from "react-redux";
 
 function NavbarComponent() {
-  const [cartList] = useRecoilState(cartState);
+  const cartList = useSelector((store) => store);
 
   return (
     <>
