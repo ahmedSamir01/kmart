@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addProduct } from "store/actions/cartActions";
+import { addProduct } from "rtk/slices/cartSlice";
 
 function Card(props) {
   const { image, title, description } = props;

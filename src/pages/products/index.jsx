@@ -1,24 +1,22 @@
-import { useState, useEffect } from "react";
-import FetchData from "server/fetchData";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "rtk/slices/productsSlice";
 import Card from "components/card";
 
 function Products() {
-  const [items, setItems] = useState([]);
+  const productsList = useSelector((store) => store.products);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    FetchData("/products")
-      .then((e) => {
-        setItems(e);
-      })
-      .catch(alert);
+    dispatch(fetchProducts());
   }, []);
 
   return (
     <section className="mt-5">
       <div className="container-fluid">
         <div className="row w-100 g-0">
-          {items?.length ? (
-            items.map((item) => (
+          {productsList?.length ? (
+            productsList.map((item) => (
               <div className="cart-item col-md-4 col px-4 mb-5" key={item.id}>
                 <Card {...item} />
               </div>

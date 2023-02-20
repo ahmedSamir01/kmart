@@ -3,7 +3,7 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 function NavbarComponent() {
-  const cartList = useSelector((store) => store);
+  const cartList = useSelector((store) => store.cart);
 
   return (
     <>

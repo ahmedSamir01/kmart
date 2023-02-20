@@ -1,10 +1,10 @@
 import { Table, Image, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { removeProduct, removeProducts } from "store/actions/cartActions";
+import { removeProduct, removeProducts } from "rtk/slices/cartSlice";
 
 function Cart() {
   const dispatch = useDispatch();
-  const cartList = useSelector((store) => store);
+  const cartList = useSelector((store) => store.cart);
   const totalPrice = cartList.reduce(
     (accumulator, currentValue) =>
       (accumulator += currentValue.price * currentValue.quantity),
