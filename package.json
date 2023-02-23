@@ -28,6 +28,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "server": "json-server --watch db.json --port 5000",
     "eject": "react-scripts eject"
