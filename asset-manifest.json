@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.68d38475.css",
-    "main.js": "/static/js/main.83bb05bb.js",
-    "static/media/KochireRegular.otf": "/static/media/KochireRegular.5c754e11c5bd566876fe.otf",
-    "index.html": "/index.html",
-    "main.68d38475.css.map": "/static/css/main.68d38475.css.map",
-    "main.83bb05bb.js.map": "/static/js/main.83bb05bb.js.map"
+    "main.css": "/kmart/static/css/main.d9c753fd.css",
+    "main.js": "/kmart/static/js/main.80fa18d0.js",
+    "static/media/KochireRegular.otf": "/kmart/static/media/KochireRegular.5c754e11c5bd566876fe.otf",
+    "index.html": "/kmart/index.html",
+    "main.d9c753fd.css.map": "/kmart/static/css/main.d9c753fd.css.map",
+    "main.80fa18d0.js.map": "/kmart/static/js/main.80fa18d0.js.map"
   },
   "entrypoints": [
-    "static/css/main.68d38475.css",
-    "static/js/main.83bb05bb.js"
+    "static/css/main.d9c753fd.css",
+    "static/js/main.80fa18d0.js"
   ]
 }
