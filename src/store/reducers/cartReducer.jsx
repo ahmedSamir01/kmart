@@ -9,14 +9,14 @@ export default function cartReducer(state = [], action) {
     case ADD_PRODUCT:
       const foundedProduct = state.find((e) => e.id === action.payload.id);
       if (foundedProduct) {
-        state.map((e) => {
+        const newList = state.map((e) => {
           if (e.id === action.payload.id) {
             return { ...foundedProduct, quantity: foundedProduct.quantity + 1 };
           } else {
             return e;
           }
         });
-        return state;
+        return newList;
       } else {
         return state.concat([{ ...action.payload, quantity: 1 }]);
       }
