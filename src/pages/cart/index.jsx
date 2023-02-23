@@ -4,7 +4,7 @@ import { removeProduct, removeProducts } from "store/actions/cartActions";
 
 function Cart() {
   const dispatch = useDispatch();
-  const cartList = useSelector((store) => store);
+  const cartList = useSelector((store) => store.cart);
   const totalPrice = cartList.reduce(
     (accumulator, currentValue) =>
       (accumulator += currentValue.price * currentValue.quantity),

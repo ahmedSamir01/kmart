@@ -1,16 +1,14 @@
-import { useState, useEffect } from "react";
-import FetchData from "server/fetchData";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetcher } from "store/actions/productsActions";
 import Card from "components/card";
 
 function Products() {
-  const [items, setItems] = useState([]);
+  const dispatch = useDispatch();
+  const items = useSelector((store) => store.products);
 
   useEffect(() => {
-    FetchData("/products")
-      .then((e) => {
-        setItems(e);
-      })
-      .catch(alert);
+    dispatch(fetcher());
   }, []);
 
   return (
