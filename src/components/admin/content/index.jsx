@@ -7,13 +7,17 @@ export default function Content() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    FetchData("/cart", { method: "GET" }, (e) => setItems(e));
+    FetchData("/cart", { method: "GET" })
+      .then((e) => setItems(e))
+      .catch((err) => console.error(err));
   }, []);
 
   const deleteTaks = (id) => {
-    FetchData(`/cart/${id}`, { method: "DELETE" }, () =>
-      SweetAlert(() => setItems(items.filter((item) => item.id !== id)))
-    );
+    FetchData(`/cart/${id}`, { method: "DELETE" })
+      .then(() => {
+        SweetAlert(() => setItems(items.filter((item) => item.id !== id)));
+      })
+      .catch((err) => console.error(err));
   };
 
   return (

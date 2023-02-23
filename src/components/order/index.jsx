@@ -29,14 +29,9 @@ function Order({ data }) {
         "Content-Type": "application/json",
       },
     };
-    FetchData(
-      count ? `/shopping-items/${data.id}` : `/shopping-items`,
-      options,
-      (e) => {
-        closeSpinner(() => setCount((count) => count + 1));
-      },
-      () => setIsloading(false)
-    );
+    FetchData(count ? `/shopping-items/${data.id}` : `/shopping-items`, options)
+      .then(() => closeSpinner(() => setCount((count) => count + 1)))
+      .catch((err) => console.error(err));
   };
 
   const handleRemove = () => {
@@ -52,15 +47,18 @@ function Order({ data }) {
           "Content-Type": "application/json",
         },
       };
-
-      FetchData(`/shopping-items/${data.id}`, options, (e) => {
-        closeSpinner(() => setCount((count) => count - 1));
-      });
+      FetchData(`/shopping-items/${data.id}`, options)
+        .then(() => {
+          closeSpinner(() => setCount((count) => count - 1));
+        })
+        .catch((err) => console.error(err));
     } else if (count === 1) {
       setIsloading(true);
-      FetchData(`/shopping-items/${data.id}`, { method: "DELETE" }, (e) => {
-        closeSpinner(() => setCount((count) => count - 1));
-      });
+      FetchData(`/shopping-items/${data.id}`, { method: "DELETE" })
+        .then(() => {
+          closeSpinner(() => setCount((count) => count - 1));
+        })
+        .catch((err) => console.error(err));
     }
   };
 

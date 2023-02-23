@@ -6,7 +6,9 @@ function Cart() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    FetchData("/shopping-items", { method: "GET" }, (e) => setItems(e));
+    FetchData("/shopping-items", { method: "GET" })
+      .then((e) => setItems(e))
+      .catch((err) => console.error(err));
   }, []);
 
   return (

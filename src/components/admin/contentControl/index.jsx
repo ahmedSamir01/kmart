@@ -16,7 +16,9 @@ export default function ContentControl({ editable }) {
   // Check if the component is for edit or create!
   useEffect(() => {
     if (editable) {
-      FetchData(`/cart/${id}`, { method: "GET" }, (e) => setData(e));
+      FetchData(`/cart/${id}`, { method: "GET" })
+        .then((e) => setData(e))
+        .catch((err) => console.error(err));
     } else {
       setData({ title: "", description: "", image: "" });
     }
@@ -39,7 +41,9 @@ export default function ContentControl({ editable }) {
         "Content-Type": "application/json",
       },
     };
-    FetchData(editable ? `/cart/${id}` : "/cart", options, fetchDataCallback);
+    FetchData(editable ? `/cart/${id}` : "/cart", options)
+      .then(fetchDataCallback)
+      .catch((err) => console.error(err));
   };
 
   // When submit the form
@@ -55,29 +59,37 @@ export default function ContentControl({ editable }) {
   }
 
   const inputsNames = ["title", "description", "image"];
-  const inputBody = (name) => (
-    <div className="mb-3">
-      <label htmlFor={name} className="form-label">
-        {name}
-      </label>
-      <input
-        required
-        type="text"
-        name={name}
-        value={data[name]}
-        onChange={handleChange}
-        className="form-control"
-        id={name}
-      />
-    </div>
-  );
 
   return (
     <form onSubmit={handleSubmit}>
-      {inputsNames?.map((name) => inputBody(name))}
+      {inputsNames?.map((name, i) => (
+        <InputBody
+          name={name}
+          key={i}
+          data={data}
+          handleChange={handleChange}
+        />
+      ))}
       <div className="mt-5 text-center">
         <input type="submit" className="btn btn-success" value="Save" />
       </div>
     </form>
   );
 }
+
+const InputBody = ({ name, data, handleChange }) => (
+  <div className="mb-3">
+    <label htmlFor={name} className="form-label">
+      {name}
+    </label>
+    <input
+      required
+      type="text"
+      name={name}
+      value={data[name]}
+      onChange={handleChange}
+      className="form-control"
+      id={name}
+    />
+  </div>
+);

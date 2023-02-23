@@ -15,12 +15,13 @@ function Product() {
   });
 
   useEffect(() => {
-    FetchData(
-      `/shopping-items/${id}`,
-      { method: "GET" },
-      (e) => setData(e),
-      () => FetchData(`/cart/${id}`, { method: "GET" }, (e) => setData(e))
-    );
+    FetchData(`/shopping-items/${id}`, { method: "GET" })
+      .then((e) => setData(e))
+      .catch((err) => {
+        FetchData(`/cart/${id}`, { method: "GET" })
+          .then((e) => setData(e))
+          .catch((err) => console.error(err));
+      });
   }, []);
 
   return (

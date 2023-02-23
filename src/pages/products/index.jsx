@@ -6,7 +6,9 @@ function Products() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    FetchData("/cart", { method: "GET" }, (e) => setItems(e));
+    FetchData("/cart", { method: "GET" })
+      .then((e) => setItems(e))
+      .catch((err) => console.error(err));
   }, []);
 
   return (
