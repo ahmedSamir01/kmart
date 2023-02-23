@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/kmart/static/css/main.b4e96fd8.css",
+    "main.js": "/kmart/static/js/main.e3868a0c.js",
+    "static/media/KochireRegular.otf": "/kmart/static/media/KochireRegular.5c754e11c5bd566876fe.otf",
+    "index.html": "/kmart/index.html",
+    "main.b4e96fd8.css.map": "/kmart/static/css/main.b4e96fd8.css.map",
+    "main.e3868a0c.js.map": "/kmart/static/js/main.e3868a0c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b4e96fd8.css",
+    "static/js/main.e3868a0c.js"
+  ]
+}
