@@ -1,21 +1,17 @@
-import { useEffect, useState } from "react";
-import Card from "components/card";
-import FetchData from "server/FetchData";
 import SweetAlert from "components/sweetAlert";
+import FetchData from "server/FetchData";
+import useFetch from "hooks/useFetch";
+import Card from "components/card";
 
 export default function Content() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    FetchData("/cart", { method: "GET" })
-      .then((e) => setItems(e))
-      .catch((err) => console.error(err));
-  }, []);
+  const [fetchedItems, setFetchedItems] = useFetch("/cart");
 
   const deleteTaks = (id) => {
     FetchData(`/cart/${id}`, { method: "DELETE" })
       .then(() => {
-        SweetAlert(() => setItems(items.filter((item) => item.id !== id)));
+        SweetAlert(() =>
+          setFetchedItems(fetchedItems.filter((item) => item.id !== id))
+        );
       })
       .catch((err) => console.error(err));
   };
@@ -23,8 +19,8 @@ export default function Content() {
   return (
     <section>
       <div className="row w-100">
-        {items?.length ? (
-          items.map((item) => (
+        {fetchedItems?.length ? (
+          fetchedItems.map((item) => (
             <div className="col-md-4 col px-4 mb-5" key={item.id}>
               <Card
                 {...item}

@@ -1,4 +1,4 @@
-const FetchData = async (endpoint, settings, handleFetch, execption) => {
+const FetchData = async (endpoint, settings) => {
   const response = await fetch(`http://localhost:5000${endpoint}`, settings);
 
   if (response.ok) {

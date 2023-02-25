@@ -1,22 +1,15 @@
-import { useState, useEffect } from "react";
-import FetchData from "server/FetchData";
 import Card from "components/card";
+import useFetch from "hooks/useFetch";
 
 function Cart() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    FetchData("/shopping-items", { method: "GET" })
-      .then((e) => setItems(e))
-      .catch((err) => console.error(err));
-  }, []);
+  const [fetchedItems] = useFetch("/shopping-items");
 
   return (
     <section className="mt-5">
       <div className="container-fluid">
         <div className="row w-100 g-0">
-          {items?.length ? (
-            items.map((item) => (
+          {fetchedItems?.length ? (
+            fetchedItems.map((item) => (
               <div className="cart-item col-md-4 col px-4 mb-5" key={item.id}>
                 <Card {...item} readOnly={false} isAdmin={false} />
               </div>

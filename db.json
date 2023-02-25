@@ -37,20 +37,8 @@
       "image": "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg"
     },
     {
-      "title": "ss",
-      "description": "ss",
-      "image": "ss",
-      "id": 17
-    },
-    {
-      "title": "csd",
-      "description": "dddd",
-      "image": "dd",
-      "id": 18
-    },
-    {
       "title": "ererere",
-      "description": "new desc",
+      "description": "new desc1",
       "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg",
       "id": 19
     }
@@ -64,18 +52,11 @@
       "count": 5
     },
     {
-      "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-skincare-products-1656081764.jpg?crop=1.00xw:0.503xh;0,0.279xh&resize=1200:*",
-      "title": "new item",
-      "id": 18,
-      "description": "new desc",
-      "count": 2
-    },
-    {
       "image": "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg",
       "title": "Lock and Love Women's Removable Hooded Faux Leather Moto Biker Jacket",
       "id": 16,
       "description": "100% POLYURETHANE(shell) 100% POLYESTER(lining) 75% POLYESTER 25% COTTON (SWEATER), Faux leather material for style and comfort / 2 pockets of front, 2-For-One Hooded denim style faux leather jacket, Button detail on waist / Detail stitching at sides, HAND WASH ONLY / DO NOT BLEACH / LINE DRY / DO NOT IRON",
-      "count": 4
+      "count": 5
     },
     {
       "image": "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg",
