@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import FetchData from "server/FetchData";
+import Spinner from "shared/Spinner";
 
 function Order({ data }) {
   const [count, setCount] = useState(0);
@@ -79,11 +80,7 @@ function Order({ data }) {
         <i className="fa fa-minus text-white" />
       </button>
       <span>{count}</span>
-      {isloading && (
-        <div className="spinner-border ms-2 spinner-border-sm" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      )}
+      {isloading && <Spinner size="sm" />}
     </>
   );
 }

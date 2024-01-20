@@ -1,8 +1,12 @@
 import Card from "components/card";
 import { useShopList } from "hooks/useShop";
+import { useState } from "react";
+import Spinner from "shared/Spinner";
 
 function Products() {
-  const { isLoading, data, isError, error } = useShopList();
+  const [pageNumber, setPageNumber] = useState(1);
+  const { isLoading, data, isError, error, isFetching } =
+    useShopList(pageNumber);
 
   if (isLoading) {
     return <h2>loading...</h2>;
@@ -22,8 +26,23 @@ function Products() {
               </div>
             ))
           ) : (
-            <p>No data to show</p>
+            <p className="px-4">No data to show</p>
           )}
+          <div className="pagination-bar px-4">
+            <button
+              onClick={() => setPageNumber((page) => page - 1)}
+              disabled={pageNumber === 1}
+            >
+              Prev Page
+            </button>
+            <button
+              onClick={() => setPageNumber((page) => page + 1)}
+              disabled={!data?.length}
+            >
+              Next Page
+            </button>{" "}
+            {isFetching && <Spinner size="sm" />}
+          </div>
         </div>
       </div>
     </section>
