@@ -13,7 +13,7 @@ const mutateShopList = (item) => {
 };
 
 export function useShopList() {
-  return useQuery("shop-list", fetchShopList, {});
+  return useQuery("shop-list", fetchShopList, { select: (data) => data.data });
 }
 export function useShopItem(itemId) {
   return useQuery("shop-item", [fetchShopItem, itemId], {});
