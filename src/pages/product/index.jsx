@@ -3,26 +3,20 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import FetchData from "server/FetchData";
 import Order from "components/order";
+import { useCartItem } from "hooks/useCart";
 
 function Product() {
   const { id } = useParams();
   const Navigate = useNavigate();
 
-  const [data, setData] = useState({
-    title: "",
-    description: "",
-    image: "",
-  });
+  const { isLoading, data, isError, error } = useCartItem(id);
 
-  useEffect(() => {
-    FetchData(`/shopping-items/${id}`, { method: "GET" })
-      .then((e) => setData(e))
-      .catch((err) => {
-        FetchData(`/cart/${id}`, { method: "GET" })
-          .then((e) => setData(e))
-          .catch((err) => console.error(err));
-      });
-  }, []);
+  if (isLoading) {
+    return <h2>loading...</h2>;
+  }
+  if (isError) {
+    return <h2>{error?.message}</h2>;
+  }
 
   return (
     <section className="my-4 cart-details">
