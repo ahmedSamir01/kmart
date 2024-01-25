@@ -4,12 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import FetchData from "server/FetchData";
 import Order from "components/order";
 import { useCartItem } from "hooks/useCart";
+import { useShopItem } from "hooks/useShop";
 
 function Product() {
   const { id } = useParams();
   const Navigate = useNavigate();
 
-  const { isLoading, data, isError, error } = useCartItem(id);
+  const { isLoading, data, isError, error } = useShopItem(id);
 
   if (isLoading) {
     return <h2>loading...</h2>;
@@ -42,7 +43,7 @@ function Product() {
             )}
           </div>
           <div className="col-md-6 align-items-center d-flex ps-5">
-            <Order data={data} />
+            <Order itemData={data} />
           </div>
         </div>
       </div>

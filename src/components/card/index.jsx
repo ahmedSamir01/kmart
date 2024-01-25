@@ -37,7 +37,7 @@ function Card(props) {
       return (
         <div className="card-controls mt-auto">
           <Order
-            data={{
+            itemData={{
               image: image,
               title: title,
               id: id,

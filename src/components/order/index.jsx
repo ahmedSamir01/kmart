@@ -1,14 +1,17 @@
+import { useCartItem } from "hooks/useCart";
 import { useEffect, useState } from "react";
 import FetchData from "server/FetchData";
 import Spinner from "shared/Spinner";
 
-function Order({ data }) {
+function Order({ itemData }) {
   const [count, setCount] = useState(0);
   const [isloading, setIsloading] = useState(false);
 
+  const { data } = useCartItem(itemData?.code);
+
   useEffect(() => {
-    data.count && setCount(data.count);
-  }, [data.count]);
+    data?.count && setCount(data.count);
+  }, [data?.count]);
 
   function closeSpinner(counterSet) {
     setTimeout(() => {

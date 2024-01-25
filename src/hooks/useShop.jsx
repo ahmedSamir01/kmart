@@ -9,7 +9,8 @@ const fetchShopList = ({ queryKey }) => {
     params: { _limit: 6, _page: pageNumber },
   });
 };
-const fetchShopItem = (itemId) => {
+const fetchShopItem = ({ queryKey }) => {
+  const itemId = queryKey[1];
   return request({ url: `${SHOP_API_URL}/${itemId}` });
 };
 const mutateShopList = (item) => {
@@ -24,7 +25,10 @@ export function useShopList(pageNumber) {
   });
 }
 export function useShopItem(itemId) {
-  return useQuery("shop-item", [fetchShopItem, itemId], {});
+  return useQuery(["shop-item", itemId], fetchShopItem, {
+    select: (data) => data.data,
+    staleTime: 10000,
+  });
 }
 export function useMutateShopList() {
   return useMutation("shop-list", mutateShopList, {

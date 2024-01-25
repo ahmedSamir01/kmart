@@ -6,26 +6,32 @@ const fetchCartList = () => {
   return request({ url: CART_API_URL });
 };
 const fetchCartItem = ({ queryKey }) => {
-  const itemId = queryKey[1];
-  return request({ url: `${CART_API_URL}/${itemId}` });
+  const itemCode = queryKey[1];
+  return request({ url: `${CART_API_URL}/?code=${itemCode}` });
 };
-const mutateCartList = (item) => {
-  return request({ url: CART_API_URL, method: "post", data: item });
+const mutateCartList = ({ options, onSuccess, onError }) => {
+  console.log({ options, onSuccess, onError });
+  return request({
+    url:
+      options?.method === "POST"
+        ? `${CART_API_URL}`
+        : `${CART_API_URL}/${options?.body?.id}`,
+    method: options?.method,
+    data: options?.body,
+  })
+    .then(onSuccess)
+    .catch(onError);
 };
 
 export function useCartList() {
   return useQuery("cart-list", fetchCartList, {});
 }
-export function useCartItem(itemId) {
-  return useQuery(["cart-item", itemId], fetchCartItem, {
-    select: (data) => data.data,
+export function useCartItem(itemCode) {
+  return useQuery(["cart-item", itemCode], fetchCartItem, {
+    select: (data) => data.data[0],
     staleTime: 10000,
   });
 }
 export function useMutateCartList() {
-  return useMutation("cart-list", mutateCartList, {
-    onMutate: () => {},
-    onError: () => {},
-    onSettled: () => {},
-  });
+  return useMutation("cart-list", mutateCartList);
 }
