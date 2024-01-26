@@ -7,9 +7,7 @@ const fetchCartList = () => {
 };
 const fetchCartItem = ({ queryKey }) => {
   const itemCode = queryKey[1];
-  return request({ url: `${CART_API_URL}/?code=${itemCode}` }).then((res) => {
-    return res?.data[0];
-  });
+  return request({ url: `${CART_API_URL}/?code=${itemCode}` });
 };
 const mutateCartItem = ({ options, onSuccess, onError }) => {
   return request({
@@ -28,13 +26,15 @@ export function useCartList() {
   return useQuery("cart-list", fetchCartList, {});
 }
 export function useCartItem(itemCode) {
-  return useQuery(["cart-item", itemCode], fetchCartItem);
+  return useQuery(["cart-item", itemCode], fetchCartItem, {
+    select: (data) => data.data[0],
+  });
 }
 export function useMutateCartItem(itemCode) {
   const queryClient = useQueryClient();
   return useMutation(mutateCartItem, {
-    onSettled: () => {
-      queryClient.invalidateQueries(["cart-item", itemCode]);
-    },
+    // onSettled: () => {
+    //   queryClient.invalidateQueries(["cart-item", itemCode]);
+    // },
   });
 }

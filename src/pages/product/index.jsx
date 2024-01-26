@@ -1,7 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate, useParams } from "react-router-dom";
-import Order from "components/order";
 import { useShopItem } from "hooks/useShop";
+import { useCartItem } from "hooks/useCart";
+import UpdateCart from "components/updateCart/UpdateCart";
 
 function Product() {
   const { id } = useParams();
@@ -39,9 +39,7 @@ function Product() {
               />
             )}
           </div>
-          <div className="col-md-6 align-items-center d-flex ps-5">
-            <Order itemData={data} />
-          </div>
+          {data ? <UpdateCart shopItem={data} /> : null}
         </div>
       </div>
     </section>
