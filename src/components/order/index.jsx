@@ -1,89 +1,93 @@
-import { useCartItem } from "hooks/useCart";
+import { useCartItem, useMutateCartItem } from "hooks/useCart";
 import { useEffect, useState } from "react";
-import FetchData from "server/FetchData";
+import { useQueryClient } from "react-query";
 import Spinner from "shared/Spinner";
 
 function Order({ itemData }) {
+  // const queryClient = useQueryClient();
   const [count, setCount] = useState(0);
-  const [isloading, setIsloading] = useState(false);
-
   const { data } = useCartItem(itemData?.code);
 
+  // Init item count
   useEffect(() => {
     data?.count && setCount(data.count);
   }, [data?.count]);
 
-  function closeSpinner(counterSet) {
-    setTimeout(() => {
-      setIsloading(false);
-      counterSet();
-    }, 1000);
-  }
+  const { mutate: UpdateProductCount, isLoading } = useMutateCartItem(
+    itemData?.code
+  );
+
+  const handleSuccess = (response, updateCount) => {
+    // queryClient.setQueryData(["cart-item", itemData?.code], (oldQueryData) => {
+    //   console.log({ ...oldQueryData, data: [response?.data] });
+    //   return {
+    //     ...oldQueryData,
+    //     data: [response?.data],
+    //   };
+    // });
+    // console.log(response);
+    updateCount();
+  };
 
   const handleAdd = () => {
-    setIsloading(true);
+    // general shop product data
+    const { code, title, description, image } = itemData;
+
+    // request body
+    const productBody = count ? data : { code, title, description, image };
 
     const options = {
       method: count ? "PUT" : "POST",
-      body: JSON.stringify({
-        ...data,
-        count: count ? count + 1 : 1,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: { ...productBody, count: count + 1 },
     };
-    FetchData(count ? `/shopping-items/${data.id}` : `/shopping-items`, options)
-      .then(() => closeSpinner(() => setCount((count) => count + 1)))
-      .catch((err) => console.error(err));
+    UpdateProductCount({
+      options,
+      onSuccess: (response) =>
+        handleSuccess(response, () => setCount((count) => count + 1)),
+      onError: (err) => console.error(err),
+    });
   };
 
   const handleRemove = () => {
+    const handleResponse = {
+      onSuccess: (response) =>
+        handleSuccess(response, () => setCount((count) => count - 1)),
+      onError: (err) => console.error(err),
+    };
     if (count > 1) {
-      setIsloading(true);
-      const options = {
-        method: "PUT",
-        body: JSON.stringify({
-          ...data,
-          count: count - 1,
-        }),
-        headers: {
-          "Content-Type": "application/json",
+      UpdateProductCount({
+        options: {
+          method: "PUT",
+          body: { ...data, count: count - 1 },
         },
-      };
-      FetchData(`/shopping-items/${data.id}`, options)
-        .then(() => {
-          closeSpinner(() => setCount((count) => count - 1));
-        })
-        .catch((err) => console.error(err));
+        ...handleResponse,
+      });
     } else if (count === 1) {
-      setIsloading(true);
-      FetchData(`/shopping-items/${data.id}`, { method: "DELETE" })
-        .then(() => {
-          closeSpinner(() => setCount((count) => count - 1));
-        })
-        .catch((err) => console.error(err));
+      UpdateProductCount({
+        options: { method: "DELETE", body: { ...data, count: count - 1 } },
+        ...handleResponse,
+      });
     }
   };
 
   return (
     <>
       <button
-        disabled={isloading}
+        disabled={isLoading}
         className="btn px-2 py-1 border me-2 bg-success"
         onClick={handleAdd}
       >
         <i className="fa fa-plus text-white" />
       </button>
       <button
-        disabled={isloading}
+        disabled={isLoading}
         className="btn px-2 py-1 border me-3 bg-danger"
         onClick={handleRemove}
       >
         <i className="fa fa-minus text-white" />
       </button>
       <span>{count}</span>
-      {isloading && <Spinner size="sm" />}
+      {isLoading && <Spinner size="sm" />}
     </>
   );
 }

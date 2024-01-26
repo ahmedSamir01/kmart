@@ -7,10 +7,11 @@ const fetchCartList = () => {
 };
 const fetchCartItem = ({ queryKey }) => {
   const itemCode = queryKey[1];
-  return request({ url: `${CART_API_URL}/?code=${itemCode}` });
+  return request({ url: `${CART_API_URL}/?code=${itemCode}` }).then((res) => {
+    return res?.data[0];
+  });
 };
-const mutateCartList = ({ options, onSuccess, onError }) => {
-  console.log({ options, onSuccess, onError });
+const mutateCartItem = ({ options, onSuccess, onError }) => {
   return request({
     url:
       options?.method === "POST"
@@ -27,11 +28,13 @@ export function useCartList() {
   return useQuery("cart-list", fetchCartList, {});
 }
 export function useCartItem(itemCode) {
-  return useQuery(["cart-item", itemCode], fetchCartItem, {
-    select: (data) => data.data[0],
-    staleTime: 10000,
-  });
+  return useQuery(["cart-item", itemCode], fetchCartItem);
 }
-export function useMutateCartList() {
-  return useMutation("cart-list", mutateCartList);
+export function useMutateCartItem(itemCode) {
+  const queryClient = useQueryClient();
+  return useMutation(mutateCartItem, {
+    onSettled: () => {
+      queryClient.invalidateQueries(["cart-item", itemCode]);
+    },
+  });
 }

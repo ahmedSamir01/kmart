@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import FetchData from "server/FetchData";
 import Order from "components/order";
-import { useCartItem } from "hooks/useCart";
 import { useShopItem } from "hooks/useShop";
 
 function Product() {
