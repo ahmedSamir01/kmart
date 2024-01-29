@@ -1,23 +1,70 @@
 import Card from "components/card";
-import useFetch from "hooks/useFetch";
+import { CART_API_URL } from "constants";
+import { Fragment } from "react";
+import { useInfiniteQuery } from "react-query";
+import { request } from "server/axios-utils";
+
+const fetchCartItems = ({ pageParam = 0 }) => {
+  return request({ url: `${CART_API_URL}?_limit=2&_page=${pageParam}` });
+};
 
 function Cart() {
-  const [fetchedItems] = useFetch("/shopping-items");
+  // data here contains a list of pages
+  const {
+    isLoading,
+    isError,
+    error,
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery(["cart-list"], fetchCartItems, {
+    getNextPageParam: (lastPage, pages) =>
+      !lastPage?.data?.length ? undefined : pages.length + 1,
+    // !pages[pages?.length - 1]?.data?.length ? undefined : pages.length + 1,
+    select: (data) => data?.pages,
+    staleTime: 10000,
+  });
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (isError) {
+    return <h2>{error.message}</h2>;
+  }
 
   return (
     <section className="mt-5">
       <div className="container-fluid">
         <div className="row w-100 g-0">
-          {fetchedItems?.length ? (
-            fetchedItems.map((item) => (
-              <div className="cart-item col-md-4 col px-4 mb-5" key={item.id}>
-                <Card {...item} readOnly={false} isAdmin={false} />
-              </div>
-            ))
-          ) : (
-            <p>No data to show</p>
-          )}
+          {data?.length
+            ? data.map((item, i) => (
+                <Fragment key={i}>
+                  {item?.data?.length ? (
+                    item.data.map((item) => (
+                      <div
+                        className="cart-item col-md-4 col px-4 mb-5"
+                        key={item.id}
+                      >
+                        <Card {...item} readOnly={false} isAdmin={false} />
+                      </div>
+                    ))
+                  ) : (
+                    <p>No data to show</p>
+                  )}
+                </Fragment>
+              ))
+            : null}
         </div>
+        <div>
+          <button onClick={() => fetchNextPage()} disabled={!hasNextPage}>
+            Load more
+          </button>
+        </div>
+        {/* only show when first fetch */}
+        <div>{isFetching && !isFetchingNextPage ? "Fetching..." : null}</div>
       </div>
     </section>
   );

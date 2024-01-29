@@ -63,7 +63,7 @@ function Card(props) {
         )}
 
         <p className="card-text max-text">{description}</p>
-        {cardBody()}
+        {/* {cardBody()} */}
       </div>
     </div>
   );
