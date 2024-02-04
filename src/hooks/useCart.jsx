@@ -10,14 +10,17 @@ const fetchCartItem = ({ queryKey }) => {
   return request({ url: `${CART_API_URL}/?code=${itemCode}` });
 };
 const mutateCartItem = ({ options, onSuccess, onError }) => {
-  return request({
-    url:
-      options?.method === "POST"
-        ? `${CART_API_URL}`
-        : `${CART_API_URL}/${options?.body?.id}`,
-    method: options?.method,
-    data: options?.body,
-  })
+  return request(
+    {
+      url:
+        options?.method === "POST"
+          ? `${CART_API_URL}`
+          : `${CART_API_URL}/${options?.body?.id}`,
+      method: options?.method,
+      data: options?.body,
+    },
+    { delay: true }
+  )
     .then(onSuccess)
     .catch(onError);
 };
@@ -30,11 +33,31 @@ export function useCartItem(itemCode) {
     select: (data) => data.data[0],
   });
 }
-export function useMutateCartItem(itemCode) {
+export function useMutateCartItem() {
   const queryClient = useQueryClient();
   return useMutation(mutateCartItem, {
-    // onSettled: () => {
-    //   queryClient.invalidateQueries(["cart-item", itemCode]);
-    // },
+    onSuccess: (item) => {
+      // queryClient.invalidateQueries("cart-list");
+      const cartList = queryClient.getQueryData("cart-list");
+
+      // Iterate through pages and update the item if found
+      if (cartList && Array.isArray(cartList.pages)) {
+        const updatedPages = cartList.pages.map((page) => {
+          if (page.data) {
+            const updatedData = page.data.map((existingItem) =>
+              existingItem.id === item.data.id ? item.data : existingItem
+            );
+            return { data: updatedData };
+          }
+          return page;
+        });
+        console.log({ item, cartList, updatedPages });
+        // Update the query data with the modified pages
+        queryClient.setQueryData("cart-list", (prevData) => ({
+          pages: updatedPages,
+          pageParams: prevData.pageParams,
+        }));
+      }
+    },
   });
 }

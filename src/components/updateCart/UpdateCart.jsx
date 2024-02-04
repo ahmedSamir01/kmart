@@ -5,11 +5,11 @@ import Spinner from "shared/Spinner";
 
 function UpdateCart({ shopItem }) {
   const { data, isLoading, refetch } = useCartItem(shopItem?.code);
-  const { mutate: UpdateProductCount } = useMutateCartItem(shopItem?.code);
+  const { mutate: UpdateProductCount } = useMutateCartItem();
 
   const handleClick = () => {
     const { code, title, description, image } = shopItem;
-    const productBody = data || { code, title, description, image };
+    const productBody = data || { code, title, description, image, count: 1 };
 
     const requestBody = {
       options: { method: data ? "DELETE" : "POST", body: productBody },
