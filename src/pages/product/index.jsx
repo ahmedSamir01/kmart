@@ -1,13 +1,14 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useShopItem } from "hooks/useShop";
-import { useCartItem } from "hooks/useCart";
 import UpdateCart from "components/updateCart/UpdateCart";
 
 function Product() {
   const { id } = useParams();
+  const { state } = useLocation();
+  const pageNumber = state?.pageNumber;
   const Navigate = useNavigate();
 
-  const { isLoading, data, isError, error } = useShopItem(id);
+  const { isLoading, data, isError, error } = useShopItem({ id, pageNumber });
 
   if (isLoading) {
     return <h2>loading...</h2>;

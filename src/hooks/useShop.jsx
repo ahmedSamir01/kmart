@@ -1,12 +1,14 @@
 import { SHOP_API_URL } from "constants";
 import { request } from "server/axios-utils";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+
+const _limit = 6;
 
 const fetchShopList = ({ queryKey }) => {
   const pageNumber = queryKey[1];
   return request({
     url: SHOP_API_URL,
-    params: { _limit: 6, _page: pageNumber },
+    params: { _limit, _page: pageNumber },
   });
 };
 const fetchShopItem = ({ queryKey }) => {
@@ -24,10 +26,18 @@ export function useShopList(pageNumber) {
     keepPreviousData: true,
   });
 }
-export function useShopItem(itemId) {
-  return useQuery(["shop-item", itemId], fetchShopItem, {
+export function useShopItem({ id, pageNumber }) {
+  const queryClient = useQueryClient();
+
+  return useQuery(["shop-item", id], fetchShopItem, {
     select: (data) => data.data,
-    staleTime: 10000,
+    // staleTime: 10000,
+    initialData: () => {
+      const item = queryClient
+        .getQueryData(["shop-list", pageNumber])
+        ?.data?.find((li) => li.id === parseInt(id));
+      return item ? { data: item } : undefined;
+    },
   });
 }
 export function useMutateShopList() {

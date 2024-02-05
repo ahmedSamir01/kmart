@@ -13,6 +13,7 @@ function Card(props) {
     handleDelete,
     readOnly,
     count,
+    pageNumber = 1,
   } = props;
 
   const cardBody = () => {
@@ -55,7 +56,7 @@ function Card(props) {
       <img src={image} className="card-img-top" alt={title} />
       <div className="card-body mt-2 border-top d-flex flex-column">
         {readOnly ? (
-          <Link className="card-title" to={`${id}`}>
+          <Link className="card-title" to={`${id}`} state={{ pageNumber }}>
             {title}
           </Link>
         ) : (

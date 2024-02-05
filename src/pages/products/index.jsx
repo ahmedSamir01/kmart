@@ -22,7 +22,12 @@ function Products() {
           {data?.length ? (
             data.map((item) => (
               <div className="cart-item col-md-4 col px-4 mb-5" key={item.id}>
-                <Card {...item} readOnly={true} isAdmin={false} />
+                <Card
+                  {...item}
+                  readOnly={true}
+                  isAdmin={false}
+                  pageNumber={pageNumber}
+                />
               </div>
             ))
           ) : (

@@ -51,7 +51,6 @@ export function useMutateCartItem() {
           }
           return page;
         });
-        console.log({ item, cartList, updatedPages });
         // Update the query data with the modified pages
         queryClient.setQueryData("cart-list", (prevData) => ({
           pages: updatedPages,
