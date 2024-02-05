@@ -5,7 +5,8 @@ import Spinner from "shared/Spinner";
 
 function UpdateCart({ shopItem }) {
   const { data, isLoading, refetch } = useCartItem(shopItem?.code);
-  const { mutate: UpdateProductCount } = useMutateCartItem();
+  const { mutate: UpdateProductCount, isLoading: mutateLoading } =
+    useMutateCartItem();
 
   const handleClick = () => {
     const { code, title, description, image } = shopItem;
@@ -16,8 +17,9 @@ function UpdateCart({ shopItem }) {
       onError: (err) => {
         console.error(err);
       },
-      onSuccess: () => {
-        SweetAlert(() => refetch());
+      onSuccess: async () => {
+        await refetch();
+        SweetAlert();
       },
     };
     // Mutate Cart
@@ -28,12 +30,12 @@ function UpdateCart({ shopItem }) {
     <div className="col-md-6 align-items-center d-flex ps-5">
       <button
         onClick={handleClick}
-        className={`btn btn-${
-          isLoading ? "secondary" : data ? "danger" : "success"
+        className={`update-cart-list-btn btn btn-${
+          isLoading || mutateLoading ? "secondary" : data ? "danger" : "success"
         } px-4 py-2`}
-        disabled={isLoading}
+        disabled={isLoading || mutateLoading}
       >
-        {isLoading ? (
+        {isLoading || mutateLoading ? (
           <Spinner size="sm" />
         ) : data ? (
           "Remove From Cart"

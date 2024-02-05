@@ -6,7 +6,7 @@ const SweetAlert = (callBackFn) => {
 
   MySwal.fire({
     title: <p className="m-0">done successflly</p>,
-    position: "top",
+    position: "center",
   }).then(() => {
     callBackFn();
   });
