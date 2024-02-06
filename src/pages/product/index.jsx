@@ -20,10 +20,7 @@ function Product() {
   return (
     <section className="my-4 cart-details">
       <div className="container-fluid px-4">
-        <button
-          className="btn btn-primary mb-3"
-          onClick={() => Navigate("/products")}
-        >
+        <button className="btn btn-primary mb-3" onClick={() => Navigate(-1)}>
           back
         </button>
         <div className="row">

@@ -4,7 +4,10 @@ import { useState } from "react";
 import Spinner from "shared/Spinner";
 
 function Products() {
-  const [pageNumber, setPageNumber] = useState(1);
+  const searchParams = new URLSearchParams(window.location.search);
+  const page = parseInt(searchParams.get("page"));
+
+  const [pageNumber, setPageNumber] = useState(page || null);
   const { isLoading, data, isError, error, isFetching } =
     useShopList(pageNumber);
 
@@ -14,6 +17,12 @@ function Products() {
   if (isError) {
     return <h2>{error?.message}</h2>;
   }
+
+  const handlePagination = ({ type }) => {
+    const newPage = type === "next" ? pageNumber + 1 : pageNumber - 1;
+    window.history.pushState(null, null, `?page=${newPage}`);
+    setPageNumber(newPage);
+  };
 
   return (
     <section className="mt-5">
@@ -35,13 +44,13 @@ function Products() {
           )}
           <div className="pagination-bar px-4">
             <button
-              onClick={() => setPageNumber((page) => page - 1)}
+              onClick={() => handlePagination({ type: "prev" })}
               disabled={pageNumber === 1}
             >
               Prev Page
             </button>
             <button
-              onClick={() => setPageNumber((page) => page + 1)}
+              onClick={() => handlePagination({ type: "next" })}
               disabled={!data?.length}
             >
               Next Page
