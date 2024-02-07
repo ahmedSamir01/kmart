@@ -27,7 +27,7 @@ function UpdateCart({ shopItem }) {
   };
 
   return (
-    <div className="col-md-6 align-items-center d-flex ps-5">
+    <div className="col-md-6 align-items-center d-flex ps-md-5 mt-4">
       <button
         onClick={handleClick}
         className={`update-cart-list-btn btn btn-${

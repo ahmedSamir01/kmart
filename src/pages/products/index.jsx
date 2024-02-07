@@ -42,18 +42,20 @@ function Products() {
           ) : (
             <p className="px-4">No data to show</p>
           )}
-          <div className="pagination-bar px-4">
+          <div className="pagination-bar px-4 mb-4">
             <button
+              className="btn btn-dark me-2"
               onClick={() => handlePagination({ type: "prev" })}
               disabled={pageNumber === 1}
             >
-              Prev Page
+              Prev
             </button>
             <button
+              className="btn btn-dark"
               onClick={() => handlePagination({ type: "next" })}
               disabled={!data?.length}
             >
-              Next Page
+              Next
             </button>{" "}
             {isFetching && <Spinner size="sm" />}
           </div>
