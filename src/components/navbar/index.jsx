@@ -27,7 +27,7 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav w-100 mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link" to="/products">
+                <Link className="nav-link" to="/products?page=1">
                   Shop!
                 </Link>
               </li>

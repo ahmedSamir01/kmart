@@ -33,21 +33,30 @@ export function useCartItem(itemCode) {
     select: (data) => data.data[0],
   });
 }
-export function useMutateCartItem() {
+export function useMutateCartItem(itemData) {
   const queryClient = useQueryClient();
   return useMutation(mutateCartItem, {
-    onSuccess: (item) => {
+    onSuccess: (responseItem) => {
       // queryClient.invalidateQueries("cart-list");
       const cartList = queryClient.getQueryData("cart-list");
+      const responseItemId = responseItem?.data?.id;
 
       // Iterate through pages and update the item if found
       if (cartList && Array.isArray(cartList.pages)) {
         const updatedPages = cartList.pages.map((page) => {
           if (page.data) {
-            const updatedData = page.data.map((existingItem) =>
-              existingItem.id === item.data.id ? item.data : existingItem
-            );
-            return { data: updatedData };
+            const updatedData = page.data.map((existingItem) => {
+              if (responseItemId) {
+                if (existingItem.id === responseItemId) {
+                  return responseItem.data;
+                } else {
+                  return existingItem;
+                }
+              } else {
+                return itemData?.id === existingItem.id ? null : existingItem;
+              }
+            });
+            return { data: updatedData.filter(Boolean) }; // Remove null entries
           }
           return page;
         });

@@ -7,7 +7,7 @@ function Products() {
   const searchParams = new URLSearchParams(window.location.search);
   const page = parseInt(searchParams.get("page"));
 
-  const [pageNumber, setPageNumber] = useState(page || null);
+  const [pageNumber, setPageNumber] = useState(page || 1);
   const { isLoading, data, isError, error, isFetching } =
     useShopList(pageNumber);
 

@@ -6,7 +6,7 @@ import Spinner from "shared/Spinner";
 function Order({ itemData }) {
   const { count } = itemData;
 
-  const { mutate: UpdateProductCount, isLoading } = useMutateCartItem();
+  const { mutate: UpdateProductCount, isLoading } = useMutateCartItem(itemData);
 
   const handleAdd = () => {
     const options = {
@@ -20,26 +20,13 @@ function Order({ itemData }) {
   };
 
   const handleRemove = () => {
-    // const handleResponse = {
-    //   onSuccess: () => closeSpinner(() => setCount((count) => count - 1)),
-    //   onError: (err) => console.error(err),
-    // };
-    // if (count > 1) {
-    //   setIsloading(true);
-    //   UpdateProductCount({
-    //     options: {
-    //       method: "PUT",
-    //       body: { ...data, count: count - 1 },
-    //     },
-    //     ...handleResponse,
-    //   });
-    // } else if (count === 1) {
-    //   setIsloading(true);
-    //   UpdateProductCount({
-    //     options: { method: "DELETE", body: { ...data, count: count - 1 } },
-    //     ...handleResponse,
-    //   });
-    // }
+    UpdateProductCount({
+      options: {
+        method: count === 1 ? "DELETE" : "PUT",
+        body: { ...itemData, count: count - 1 },
+      },
+      onError: (err) => console.error(err),
+    });
   };
 
   return (
@@ -56,7 +43,9 @@ function Order({ itemData }) {
         className="btn px-2 py-1 border me-3 bg-danger"
         onClick={handleRemove}
       >
-        <i className="fa fa-minus text-white" />
+        <i
+          className={`fa ${count === 1 ? "fa-trash" : "fa-minus"} text-white`}
+        />
       </button>
       <span className="me-3">{count}</span>
       {isLoading ? <Spinner size="sm" /> : null}

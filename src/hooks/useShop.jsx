@@ -24,6 +24,7 @@ export function useShopList(pageNumber) {
     select: (data) => data.data,
     staleTime: 10000,
     keepPreviousData: true,
+    refetchInterval: 30000,
   });
 }
 export function useShopItem({ id, pageNumber }) {
