@@ -8,7 +8,7 @@ const SweetAlert = (callBackFn) => {
     title: <p className="m-0">done successflly</p>,
     position: "center",
   }).then(() => {
-    callBackFn();
+    callBackFn && callBackFn();
   });
 };
 

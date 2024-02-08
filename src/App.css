@@ -31,6 +31,12 @@ h5 {
   }
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .navbar-brand {
   font-weight: 300;
   font-size: 1.5rem;
@@ -43,6 +49,11 @@ h5 {
 
 .nav-link {
   color: #fff;
+}
+
+.products-section {
+  flex-grow: 1;
+  display: flex;
 }
 
 .dashboard {

@@ -5,12 +5,12 @@ function Sidebar() {
     <aside className="border-end bg-dark p-4">
       <ul className="list-unstyled">
         <li className="mb-2">
-          <Link className="d-md-inline-block d-none" to="/dashboard">
+          <Link className="d-md-inline-block d-none" to="/dashboard?page=1">
             dashboard
           </Link>
           <Link
             className="d-flex d-md-none justify-content-center mb-3"
-            to="/dashboard"
+            to="/dashboard?page=1"
           >
             <i className=" text-white fa fa-list p-3 border rounded-circle" />
           </Link>

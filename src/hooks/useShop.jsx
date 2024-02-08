@@ -15,8 +15,13 @@ const fetchShopItem = ({ queryKey }) => {
   const itemId = queryKey[1];
   return request({ url: `${SHOP_API_URL}/${itemId}` });
 };
-const mutateShopList = (item) => {
-  return request({ url: SHOP_API_URL, method: "post", data: item });
+const mutateShopList = ({ options, onSuccess, onError }) => {
+  return request({
+    url: `${SHOP_API_URL}/${options?.body?.id}`,
+    method: options?.method,
+  })
+    .then(onSuccess)
+    .catch(onError);
 };
 
 export function useShopList(pageNumber) {
@@ -41,10 +46,13 @@ export function useShopItem({ id, pageNumber }) {
     },
   });
 }
-export function useMutateShopList() {
-  return useMutation("shop-list", mutateShopList, {
-    onMutate: () => {},
-    onError: () => {},
-    onSettled: () => {},
+
+export function useMutateShopList(itemData, pageNumber) {
+  const queryClient = useQueryClient();
+
+  return useMutation(mutateShopList, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("shop-list");
+    },
   });
 }

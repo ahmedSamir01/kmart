@@ -37,7 +37,7 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item ms-lg-auto">
-                <Link className="nav-link" to="/dashboard">
+                <Link className="nav-link" to="/dashboard?page=1">
                   Admin
                 </Link>
               </li>
