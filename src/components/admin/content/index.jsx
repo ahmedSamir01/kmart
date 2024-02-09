@@ -47,6 +47,7 @@ export default function Content() {
                 readOnly={false}
                 isAdmin={true}
                 handleDelete={deleteProduct}
+                pageNumber={pageNumber}
               />
             </div>
           ))

@@ -35,12 +35,12 @@ export function useShopList(pageNumber) {
     refetchInterval: 30000,
   });
 }
-export function useShopItem({ id, pageNumber }) {
+export function useShopItem({ id, pageNumber, enabled = true }) {
   const queryClient = useQueryClient();
 
   return useQuery(["shop-item", id], fetchShopItem, {
     select: (data) => data.data,
-    // staleTime: 10000,
+    enabled,
     initialData: () => {
       const item = queryClient
         .getQueryData(["shop-list", pageNumber])

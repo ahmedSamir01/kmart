@@ -1,13 +1,22 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import SweetAlert from "components/sweetAlert";
 import FetchData from "server/FetchData";
+import { useShopItem } from "hooks/useShop";
 
 export default function ContentControl({ editable }) {
   let { id } = useParams();
+  const { state } = useLocation();
+  const pageNumber = state?.pageNumber;
 
-  const [IsDirty, setisDirty] = useState(false);
-  const [data, setData] = useState({
+  const { data: productsList, refetch } = useShopItem({
+    id,
+    pageNumber,
+    enabled: false,
+  });
+
+  // const [IsDirty, setisDirty] = useState(false);
+  const [formData, setFormData] = useState({
     title: "",
     description: "",
     image: "",
@@ -15,47 +24,52 @@ export default function ContentControl({ editable }) {
 
   // Check if the component is for edit or create!
   useEffect(() => {
-    if (editable) {
-      FetchData(`/cart/${id}`, { method: "GET" })
-        .then((e) => setData(e))
-        .catch((err) => console.error(err));
-    } else {
-      setData({ title: "", description: "", image: "" });
-    }
+    (async function fetchData() {
+      if (editable) {
+        if (productsList) {
+          setFormData(productsList);
+        } else {
+          await refetch();
+        }
+      } else {
+        setFormData({ title: "", description: "", image: "" });
+      }
+    })();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editable]);
+  }, [editable, productsList]);
 
   // Callback fn, triggered after successful submitting
-  function fetchDataCallback() {
-    SweetAlert(() => {
-      !editable && setData({ title: "", description: "", image: "" });
-      setisDirty(false);
-    });
-  }
+  // function fetchDataCallback() {
+  //   SweetAlert(() => {
+  //     !editable && setFormData({ title: "", description: "", image: "" });
+  //     setisDirty(false);
+  //   });
+  // }
   // Triggered when submitting (create / edit)
-  const fetchData = (formData) => {
-    const options = {
-      method: editable ? "PUT" : "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    FetchData(editable ? `/cart/${id}` : "/cart", options)
-      .then(fetchDataCallback)
-      .catch((err) => console.error(err));
-  };
+  // const fetchData = (formData) => {
+  //   const options = {
+  //     method: editable ? "PUT" : "POST",
+  //     body: JSON.stringify(formData),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+  //   FetchData(editable ? `/cart/${id}` : "/cart", options)
+  //     .then(fetchDataCallback)
+  //     .catch((err) => console.error(err));
+  // };
 
   // When submit the form
   function handleSubmit(e) {
-    e.preventDefault();
-    IsDirty && fetchData(data);
+    // e.preventDefault();
+    // IsDirty && fetchData(data);
   }
 
   // When change form inputs
   function handleChange(e) {
-    setData({ ...data, [e.target.name]: e.target.value });
-    setisDirty(true);
+    // setFormData({ ...data, [e.target.name]: e.target.value });
+    // setisDirty(true);
   }
 
   const inputsNames = ["title", "description", "image"];
@@ -66,7 +80,7 @@ export default function ContentControl({ editable }) {
         <InputBody
           name={name}
           key={i}
-          data={data}
+          data={formData}
           handleChange={handleChange}
         />
       ))}
@@ -77,19 +91,22 @@ export default function ContentControl({ editable }) {
   );
 }
 
-const InputBody = ({ name, data, handleChange }) => (
-  <div className="mb-3">
-    <label htmlFor={name} className="form-label">
-      {name}
-    </label>
-    <input
-      required
-      type="text"
-      name={name}
-      value={data[name]}
-      onChange={handleChange}
-      className="form-control"
-      id={name}
-    />
-  </div>
-);
+const InputBody = ({ name, data, handleChange }) => {
+  console.log({ name, data, handleChange });
+  return (
+    <div className="mb-3">
+      <label htmlFor={name} className="form-label">
+        {name}
+      </label>
+      <input
+        required
+        type="text"
+        name={name}
+        value={data[name]}
+        onChange={handleChange}
+        className="form-control"
+        id={name}
+      />
+    </div>
+  );
+};

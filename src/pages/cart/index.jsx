@@ -57,7 +57,11 @@ function Cart() {
           {!data[0]?.data?.length ? <p>No data to show</p> : null}
         </div>
         <div>
-          <button onClick={() => fetchNextPage()} disabled={!hasNextPage}>
+          <button
+            className="btn btn-primary ms-4"
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage}
+          >
             Load more
           </button>
         </div>

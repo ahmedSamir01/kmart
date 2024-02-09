@@ -32,7 +32,7 @@ function Card(props) {
           </button>
           <button
             className="btn px-2 py-1 border me-3"
-            onClick={() => Navigate(`control/${id}`)}
+            onClick={() => Navigate(`control/${id}`, { state: { pageNumber } })}
           >
             <i className="fa fa-edit text-success" />
           </button>
