@@ -16,10 +16,13 @@ const fetchShopItem = ({ queryKey }) => {
   return request({ url: `${SHOP_API_URL}/${itemId}` });
 };
 const mutateShopList = ({ options, onSuccess, onError }) => {
-  return request({
-    url: `${SHOP_API_URL}/${options?.body?.id}`,
-    method: options?.method,
-  })
+  return request(
+    {
+      url: `${SHOP_API_URL}/${options?.body?.id}`,
+      method: options?.method,
+    },
+    { delay: true }
+  )
     .then(onSuccess)
     .catch(onError);
 };
@@ -47,7 +50,7 @@ export function useShopItem({ id, pageNumber }) {
   });
 }
 
-export function useMutateShopList(itemData, pageNumber) {
+export function useMutateShopList() {
   const queryClient = useQueryClient();
 
   return useMutation(mutateShopList, {

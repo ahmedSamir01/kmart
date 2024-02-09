@@ -21,7 +21,8 @@ export default function Content() {
     return <h2>{error?.message}</h2>;
   }
 
-  const deleteProduct = (id) => {
+  const deleteProduct = (id, setIsLoading) => {
+    setIsLoading(true);
     RemoveProduct({
       options: {
         method: "DELETE",
@@ -29,6 +30,9 @@ export default function Content() {
       },
       onSuccess: () => SweetAlert(() => {}),
       onError: (err) => console.error(err),
+      finally: () => {
+        setIsLoading(false);
+      },
     });
   };
 
@@ -42,7 +46,7 @@ export default function Content() {
                 {...item}
                 readOnly={false}
                 isAdmin={true}
-                handleDelete={() => deleteProduct(item.id)}
+                handleDelete={deleteProduct}
               />
             </div>
           ))

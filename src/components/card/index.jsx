@@ -1,8 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import Order from "components/order";
+import Spinner from "shared/Spinner";
+import { useState } from "react";
 
 function Card(props) {
   const Navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     image,
@@ -22,16 +25,18 @@ function Card(props) {
         <div className="card-controls mt-auto">
           <button
             className="btn px-2 py-1 border me-2"
-            onClick={() => handleDelete(id)}
+            onClick={() => handleDelete(id, setIsLoading)}
+            disabled={isLoading}
           >
             <i className="fa fa-trash text-danger" />
           </button>
           <button
-            className="btn px-2 py-1 border"
+            className="btn px-2 py-1 border me-3"
             onClick={() => Navigate(`control/${id}`)}
           >
             <i className="fa fa-edit text-success" />
           </button>
+          {isLoading ? <Spinner size="sm" /> : null}
         </div>
       );
     } else if (!readOnly) {
