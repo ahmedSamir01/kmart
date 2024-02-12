@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { useMutateShopList, useShopItem } from "hooks/useShop";
 import SweetAlert from "components/sweetAlert";
-import FetchData from "server/FetchData";
-import { useShopItem } from "hooks/useShop";
+import Spinner from "shared/Spinner";
+import BackButton from "components/backButton";
 
 export default function ContentControl({ editable }) {
   let { id } = useParams();
@@ -15,61 +16,63 @@ export default function ContentControl({ editable }) {
     enabled: false,
   });
 
-  // const [IsDirty, setisDirty] = useState(false);
+  const { mutate: UpdatShopList, isLoading } = useMutateShopList(pageNumber);
+
+  const [IsDirty, setisDirty] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     image: "",
   });
 
+  const getFormData = async () => {
+    if (editable) {
+      if (productsList) {
+        setFormData(productsList);
+      } else {
+        await refetch();
+      }
+    } else {
+      setFormData({ title: "", description: "", image: "" });
+    }
+  };
+
   // Check if the component is for edit or create!
   useEffect(() => {
-    (async function fetchData() {
-      if (editable) {
-        if (productsList) {
-          setFormData(productsList);
-        } else {
-          await refetch();
-        }
-      } else {
-        setFormData({ title: "", description: "", image: "" });
-      }
-    })();
-
+    getFormData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editable, productsList]);
 
   // Callback fn, triggered after successful submitting
-  // function fetchDataCallback() {
-  //   SweetAlert(() => {
-  //     !editable && setFormData({ title: "", description: "", image: "" });
-  //     setisDirty(false);
-  //   });
-  // }
+  function fetchDataCallback() {
+    SweetAlert(() => {
+      !editable && setFormData({ title: "", description: "", image: "" });
+      setisDirty(false);
+    });
+  }
+
   // Triggered when submitting (create / edit)
-  // const fetchData = (formData) => {
-  //   const options = {
-  //     method: editable ? "PUT" : "POST",
-  //     body: JSON.stringify(formData),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   };
-  //   FetchData(editable ? `/cart/${id}` : "/cart", options)
-  //     .then(fetchDataCallback)
-  //     .catch((err) => console.error(err));
-  // };
+  const fetchData = () => {
+    UpdatShopList({
+      options: {
+        method: editable ? "PUT" : "POST",
+        body: formData,
+      },
+      onSuccess: fetchDataCallback,
+      onError: (err) => console.error(err),
+    });
+  };
 
   // When submit the form
   function handleSubmit(e) {
-    // e.preventDefault();
-    // IsDirty && fetchData(data);
+    e.preventDefault();
+    IsDirty && fetchData();
   }
 
   // When change form inputs
   function handleChange(e) {
-    // setFormData({ ...data, [e.target.name]: e.target.value });
-    // setisDirty(true);
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setisDirty(true);
   }
 
   const inputsNames = ["title", "description", "image"];
@@ -84,15 +87,21 @@ export default function ContentControl({ editable }) {
           handleChange={handleChange}
         />
       ))}
-      <div className="mt-5 text-center">
-        <input type="submit" className="btn btn-success" value="Save" />
+      <div className="d-flex mt-5 justify-content-center">
+        <button
+          type="submit"
+          className="btn btn-success update-shop-list-btn me-3"
+          disabled={isLoading}
+        >
+          {isLoading ? <Spinner size="sm" /> : "Save"}
+        </button>
+        <BackButton url={editable ? `/dashboard?page=${pageNumber}` : null} />
       </div>
     </form>
   );
 }
 
 const InputBody = ({ name, data, handleChange }) => {
-  console.log({ name, data, handleChange });
   return (
     <div className="mb-3">
       <label htmlFor={name} className="form-label">

@@ -1,12 +1,12 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useShopItem } from "hooks/useShop";
 import UpdateCart from "components/updateCart/UpdateCart";
+import BackButton from "components/backButton";
 
 function Product() {
   const { id } = useParams();
   const { state } = useLocation();
   const pageNumber = state?.pageNumber;
-  const Navigate = useNavigate();
 
   const { isLoading, data, isError, error } = useShopItem({ id, pageNumber });
 
@@ -20,9 +20,7 @@ function Product() {
   return (
     <section className="my-4 cart-details">
       <div className="container-fluid px-4">
-        <button className="btn btn-warning  mb-3" onClick={() => Navigate(-1)}>
-          back
-        </button>
+        <BackButton />
         <div className="row">
           <div className="col-12">
             <h2 className="mb-4">{data.title}</h2>

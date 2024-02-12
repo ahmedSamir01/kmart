@@ -1,7 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useMutateCartItem } from "hooks/useCart";
 import Spinner from "shared/Spinner";
-// import { useQueryClient } from "react-query";
 
 function Order({ itemData }) {
   const { count } = itemData;
@@ -54,16 +52,3 @@ function Order({ itemData }) {
 }
 
 export default Order;
-
-// const handleSuccess = (response, updateCount) => {
-//   queryClient.setQueryData(["cart-item", itemData?.code], (oldQueryData) => {
-//     console.log({ ...oldQueryData, data: [response?.data] });
-//     return {
-//       ...oldQueryData,
-//       data: [response?.data],
-//     };
-//   });
-//   console.log(response);
-
-//   updateCount();
-// };

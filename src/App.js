@@ -9,7 +9,7 @@ import Cart from "./pages/cart";
 import Content from "./components/admin/content";
 import ContentControl from "./components/admin/contentControl";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+// import { ReactQueryDevtools } from "react-query/devtools";
 
 const queryClient = new QueryClient();
 
@@ -47,7 +47,7 @@ function App() {
           </Route>
         </Routes>
       </div>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
     </QueryClientProvider>
   );
 }

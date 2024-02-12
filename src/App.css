@@ -136,3 +136,8 @@ label {
 .update-cart-list-btn {
   width: 12rem;
 }
+.update-shop-list-btn,
+.back-button {
+  width: 8rem;
+  height: fit-content;
+}

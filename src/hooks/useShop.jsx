@@ -18,8 +18,12 @@ const fetchShopItem = ({ queryKey }) => {
 const mutateShopList = ({ options, onSuccess, onError }) => {
   return request(
     {
-      url: `${SHOP_API_URL}/${options?.body?.id}`,
+      url:
+        options?.method === "POST"
+          ? `${SHOP_API_URL}`
+          : `${SHOP_API_URL}/${options?.body?.id}`,
       method: options?.method,
+      data: options?.body,
     },
     { delay: true }
   )
